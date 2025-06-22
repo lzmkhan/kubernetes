@@ -60,31 +60,106 @@ Best practise is one application(not container) per pod.
 Each pod has one IP address which is used to communicate with other pods. Will get new IP address at every restart.
 Pods are ephimeral - means state is only managed in pod lifecycle means pods may stop running and will be replaces with another pod.
 
+```
+apiVersion: v1
+kind: Pod
+metadata:
+  name: my-pod
+spec:
+  containers:
+    - name: my-container
+      image: nginx
+```
+
 ## Service:
 
 Static/Permanent IP address attached to each pod.
 Lifecycle of service and pods are not connected. Pod may die but service will be running.
 Depending on wheteher a pod should be made available to be accessed from outside or no outside access allowed, we use **external** and **internal** service. This is very similar to public/private subnet concept.
+```
+apiVersion: v1
+kind: Service
+metadata:
+  name: backend-service
+spec:
+  type: NodePort
+  selector:
+    app: backend
+  ports:
+    - port: 8000
+      targetPort: 8000
+      nodePort: 30001
+```
 
 ## Ingress:
 
 Instead of using IP address of services, ingress maps a domain to the IPs and forwards incoming requests to the destination service. Acts like router for services IPs
+```
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: frontend-ingress
+spec:
+  rules:
+    - host: todo-app.local
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: frontend-service
+                port:
+                  number: 8080
+```
 
 ## ConfigMap:
 
 External configuration of your application.
 may contain urls and domains of each service that your application needs to communicate with.
 Ex: database url, username etc.
+```
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: app-config
+data:
+  MONGO_URL: "mongodb://mongo:27017"
+
+```
 
 ## Secret:
 
 Allows you to store secrets in base64 encoded format. They may be encrypted using third party tools for better security.
 Ex: passwords, certificates etc.
 
+```
+apiVersion: v1
+kind: Secret
+metadata:
+  name: mongo-secret
+type: Opaque
+data:
+  password: bW9uZ29wYXNzCg==  # base64 encoded
+```
+
 ## Volumes:
 
 Similar to docker volumes to persist data during container lifecycle.
 Can be local, remote and cloud storage.
+```
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mongo-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+
+```
 
 ## Deployment(replication mechanism):
 
@@ -93,6 +168,27 @@ Whenever we update images, we may need to propagate to containers running on pod
 Deployments can be abstraction of pods.
 Ex: you already running your application in three containers running accross two pods. Now you have made changes to the application and built new docker images. If you just run one replica of the application then when you change the image, there will be downtime. Instead of that, you can increase the replica, and deploy new images while the old version of your application is still running. then once the new version is deployed, you can remove the pods running old application version.
 used to manage stateless applications like frontend, and backend
+```
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend-deployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: backend
+  template:
+    metadata:
+      labels:
+        app: backend
+    spec:
+      containers:
+        - name: backend
+          image: my-backend:latest
+          ports:
+            - containerPort: 8000
+```
 
 ## Statefulset(replication mechanism):
 
