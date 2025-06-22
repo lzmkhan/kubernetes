@@ -20,15 +20,22 @@ To install kubectl:
 > code/mongo-secrets.yaml
 
 # Lab:  
-Lets start a Minikube cluster
+
+Make docker run in usergroup
+
 ```
 dockerd-rootless-setuptool.sh install -f
 docker context use rootless
-minikube start --driver=docker 
 ```
+
+Lets start a Minikube cluster
+`minikube start --driver=docker `
 
 To delete a cluster
 `minikube delete`
+
+To stop just the application service
+`kubectl scale --replicas=0 deployment/<your-deployment>`
 
 To see if any pods are available
 `kubectl get pods`
@@ -38,12 +45,15 @@ To see all resources in cluster
 
 Since we have nothing in our cluster, lets create the resources.
 `kubectl apply -f mongo-secret.yaml`
-`kubectl apply -f mongo-config.yaml`
 `kubectl apply -f mongo.yaml`
+`kubectl apply -f mongo-config.yaml`
 `kubectl apply -f webapp.yaml`
 
 once done, lets see what is created in the cluster.
 `kubectl get all`
+
+Use the below command to view resource information
+`kubectl describe <pod/service/configmap/etc name>`  
 
 Once everything is in ready state.
 We need to validate whether our application is running and 
