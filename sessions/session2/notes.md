@@ -66,3 +66,5 @@ we can use
 Next session:
 Create our own images and write the kubernetes from scratch
 also look at some commands in kubectl
+
+https://youtu.be/lnVqEh6FOPE
