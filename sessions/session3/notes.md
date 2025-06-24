@@ -27,7 +27,8 @@ Get interactive terminal of pod
 To stop just the application service
 `kubectl scale --replicas=0 deployment/<your-deployment>`
 
-
+To view the status in the manifest use:
+`kubectl get deployment <deployment-name>  -o yaml`
 Reference link for all available attributes for deployment:
 
 [Deployment | Kubernetes](https://kubernetes.io/docs/reference/kubernetes-api/workload-resources/deployment-v1/)
