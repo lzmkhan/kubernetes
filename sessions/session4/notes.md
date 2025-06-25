@@ -58,6 +58,15 @@ cross connectivity.
 ## Kompose
 Similar to docker compose but for kubernetes objects.
 Translates docker compose files in to k8s objects. provides way to ship containers from compose to K8s.
+Navigate to directory with docker-compose.yaml
+Install kompose:
+`curl -L https://github.com/kubernetes/kompose/releases/download/v1.34.0/kompose-linux-amd64 -o kompose`
+```
+chmod +x kompose
+sudo mv ./kompose /usr/local/bin/kompose
+```
+`kompose convert`
+
 
 ## Kustomise
 Configuration management tool for k8s objects configuration. similar to helm.
