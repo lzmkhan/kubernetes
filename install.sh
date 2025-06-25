@@ -7,9 +7,9 @@ sudo apt-get update -y
 # Install Docker
 echo "Installing Docker..."
 sudo apt-get install -y docker.io
-sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
 sudo systemctl enable docker
 sudo systemctl start docker
+sudo usermod -aG docker $USER && newgrp docker
 
 # Install kubectl
 echo "Installing kubectl..."
