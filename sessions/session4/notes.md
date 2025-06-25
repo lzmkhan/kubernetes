@@ -17,6 +17,9 @@ described in container spec => mounts the above created volume in container
 
 emptyDir Volume:
 exists only during pod lifecycle. used to share data between multiple containers running inside same pod.
+## Lab:
+Open session 3 sample app and create mongo deployment with persistent volume and claim
+
 
 # NameSpaces:
 Are virtual cluster backed by the same physical cluster.
