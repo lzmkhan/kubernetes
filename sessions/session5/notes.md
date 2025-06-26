@@ -14,11 +14,11 @@ Enabled by default in single namespace. For different namespace we can use Clust
 Pod in namespace A communicate with Pod in namespace B.
 Client is a pod.
 Ex: backend pod is a client to use mongo db service.
-
+**Lab:**https://github.com/lzmkhan/kubernetes/blob/main/sessions/session5/code/clusterip-service.yaml
 ## NodePort Service:
 Exposes application outside the cluster network.
 Used to serve application outside of network like Web application.
-
+**Lab:**https://github.com/lzmkhan/kubernetes/blob/main/sessions/session5/code/nodeport-service.yaml
 ## Loadbalancer Service:
 Exposes application to outer world. Uses Cloud service's Load balancers.
 Ex: ALB from AWS may connect to loadbalancer service to send request to cluster.
