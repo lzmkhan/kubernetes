@@ -26,6 +26,12 @@ Ex: ALB from AWS may connect to loadbalancer service to send request to cluster.
 ## ExternalName Service:
 Uses Loadbalancer Service with CNAME that is your website url.
 
+## Service Discovery
+Access services from same namespace and different namespace.
+pods in same namespace can access services by just service name
+if pods want to access service from another namespace they need to use fully qualified
+cluster domain name.
+
 ## kubectl port-forward:
 Purpose:
 Used to forward one or more local ports to ports on a pod, enabling access to applications running inside the pod.
@@ -44,3 +50,31 @@ Useful for accessing applications directly from your local machine without addit
 Requires connectivity to the Kubernetes API server.
 In summary, kubectl exec is about interacting with the running processes inside the container, whereas kubectl port-forward bridges your local machine with the application running inside a pod, allowing HTTP/S or TCP traffic to reach the pod from your local workstation. 
 Both commands are vital tools for development, debugging, and management of applications in a Kubernetes environment.
+
+## Lab:
+
+First create a pod which runs only curl
+`kubectl apply -f pod-svc-test.yaml`
+
+Apply the same deployment manifest.
+`kubectl apply -f deployment.yaml`
+This will spin up **3** pods because replica is set to 3.
+
+Now Create a clusterip service for the above deployment.
+`kubectl apply -f clusterip-service.yaml`
+
+Try to access the nginx-service:
+`curl nginx-service`
+This will not work. because When in clusterIp type service, the application will not be accessible outside the cluster.
+
+Try to access the nginx-service from inside the cluster.
+We have already created a pod with curl.
+`kubectl exec -it pod-svc-test -- curl nginx-service:8080`
+Now you will get HTML content from nginx server.
+
+Now lets make this available outside of the cluster network.
+`kubectl apply -f nodeport-service.yaml`
+
+Lets check if we can access our services outside of cluster
+`curl localhost:30099`
+nginx html content should be available.
