@@ -9,8 +9,8 @@ echo "Installing Docker..."
 sudo apt-get install -y docker.io
 sudo systemctl enable docker
 sudo systemctl start docker
-sudo usermod -aG docker $USER
-
+sudo usermod -aG docker $USER && newgrp docker
+ 
 # Refresh group membership (optional, requires logout/login or new shell for effect)
 echo "You may need to log out and log back in to apply the Docker group changes to your user."
 
