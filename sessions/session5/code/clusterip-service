@@ -1,0 +1,54 @@
+documentation:
+  description: |
+    This YAML file defines a Kubernetes Service of type ClusterIP.
+    The service is named 'nginx-service' and is used to expose the application
+    running on the frontend. It routes traffic from port 80 to the target port 8080
+    of the pods selected by the specified label.
+  apiVersion:
+    description: The version of the Kubernetes API that this configuration uses.
+    type: string
+  kind:
+    description: The type of Kubernetes resource being defined.
+    type: string
+  metadata:
+    name:
+      description: The name of the service.
+      type: string
+  spec:
+    type:
+      description: The type of service, which is ClusterIP in this case.
+      type: string
+    selector:
+      description: |
+        A label selector that determines which pods will receive traffic
+        sent to this service. In this case, it selects pods with the label 'app: frontend'.
+      type: object
+    ports:
+      description: |
+        A list of ports that the service will expose. Each port definition
+        includes the protocol, the port number, and the target port on the pods.
+      type: array
+      items:
+        type: object
+        properties:
+          protocol:
+            description: The protocol used by the service (e.g., TCP).
+            type: string
+          port:
+            description: The port that the service will expose.
+            type: integer
+          targetPort:
+            description: The port on the pod that the traffic will be directed to.
+            type: integer
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-service
+spec:
+  type: ClusterIP
+  selector:
+    app: frontend
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8080
