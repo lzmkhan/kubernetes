@@ -1,23 +1,13 @@
-apiVersion: v1
-kind: Pod
-metadata:
-  name: pod-svc-test
-spec:
-  containers:
-    - name: busybox
-      image: radial/busyboxplus:curl
-      command:
-        - sleep
-        - '3600'        
+      
 # Documentation
 # FILEPATH: /C:/Users/uib42790/Downloads/pod-svc-test-doc.yml
-description: |
-  This YAML file defines a Kubernetes Pod named 'pod-svc-test'.
-  The Pod contains a single container running the 'busybox' image,
-  which is a lightweight Linux distribution. The container executes
-  the command 'sleep 3600', which means it will sleep for 3600 seconds
-  (1 hour) before terminating. This is useful for testing purposes
-  or for keeping the Pod alive for a certain duration.
+# description: |
+#  This YAML file defines a Kubernetes Pod named 'pod-svc-test'.
+#  The Pod contains a single container running the 'busybox' image,
+#  which is a lightweight Linux distribution. The container executes
+#  the command 'sleep 3600', which means it will sleep for 3600 seconds
+#  (1 hour) before terminating. This is useful for testing purposes
+#  or for keeping the Pod alive for a certain duration.
 apiVersion: v1
 kind: Pod
 metadata:
