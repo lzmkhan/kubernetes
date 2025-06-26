@@ -15,7 +15,7 @@ metadata:
 spec:
   containers:
     - name: busybox
-      image: radial/busyboxplus:curl
+      image: alpine/curl:latest
       command:
         - sleep
         - '3600'
