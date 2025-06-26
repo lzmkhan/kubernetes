@@ -1,0 +1,40 @@
+# Documentation:
+# This YAML file defines a Kubernetes Deployment for an Nginx server.
+# 
+# apiVersion: apps/v1: Specifies the API version for the Deployment resource.
+# kind: Deployment: Indicates that this resource is a Deployment.
+# metadata: Contains metadata about the Deployment, including:
+#   name: The name of the Deployment, which is "nginx-server".
+#   labels: Key-value pairs used to categorize the Deployment, with "app: frontend".
+# spec: Defines the desired state of the Deployment, including:
+#   replicas: The number of pod replicas to run, set to 3.
+#   selector: Defines how to identify the pods managed by this Deployment, matching labels with "app: frontend".
+#   template: Describes the pods that will be created, including:
+#     metadata: Metadata for the pods, with labels "app: frontend".
+#     spec: Specification for the pod's containers, including:
+#       containers: A list of containers to run in the pod, with:
+#         - name: The name of the container, which is "nginx".
+#           image: The Docker image to use for the container, which is "nginx".
+#           ports: A list of ports to expose from the container, with:
+#             - containerPort: The port number to expose, set to 80 for HTTP traffic.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-server
+  labels:
+    app: frontend
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: frontend
+  template:
+    metadata:
+      labels:
+        app: frontend
+    spec:
+      containers:
+        - name: nginx
+          image: nginx
+          ports:
+            - containerPort: 80
