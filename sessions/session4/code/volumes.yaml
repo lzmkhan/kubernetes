@@ -1,0 +1,31 @@
+apiVersion:v1
+kind: PersistentVolume
+metadata:
+	name: static-persistent-volume
+spec:
+	capacity:
+		storage: 1Gi
+	accessModes:
+	-ReadWriteMany
+	hostPath:
+	path: /var/tmp
+	storageClassName: local-storage
+
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+	name: local-storage
+provisioner: kubernetes.io/no-provisioner
+volumeBindingMode: WaitForFirstConsumer
+
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+	name: cloud-ebs-storage
+provisioner: kubernetes.io/aws-ebs
+parameters:
+	type: io1
+	iopsPerGB: "10"
+	fsType:ext4
+	
+
