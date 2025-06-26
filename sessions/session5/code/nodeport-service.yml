@@ -1,0 +1,29 @@
+# Documentation:
+# This YAML file defines a Kubernetes Service of type NodePort.
+# 
+# apiVersion: v1: Specifies the version of the Kubernetes API being used.
+# kind: Service: Indicates that this configuration is for a Service resource.
+# metadata: Contains metadata about the Service, including:
+#   name: The name of the Service, which is 'nginx-service-nodeport'.
+# spec: Defines the desired state of the Service, including:
+#   type: NodePort: Specifies that this Service will be accessible via a NodePort.
+#   selector: A label selector to identify the Pods that this Service will route traffic to.
+#     app: frontend: The Service will route traffic to Pods with the label 'app: frontend'.
+#   ports: A list of ports that the Service will expose:
+#     - protocol: TCP: The protocol used by the Service.
+#       port: 80: The port that the Service will expose.
+#       targetPort: 80: The port on the Pods that the Service will forward traffic to.
+#       nodePort: 30099: The port on each Node that will forward traffic to the Service.
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-service-nodeport
+spec:
+  type: NodePort 
+  selector:
+    app: frontend
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+      nodePort: 30099
