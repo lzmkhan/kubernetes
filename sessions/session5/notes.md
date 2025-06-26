@@ -25,3 +25,22 @@ Ex: ALB from AWS may connect to loadbalancer service to send request to cluster.
 
 ## ExternalName Service:
 Uses Loadbalancer Service with CNAME that is your website url.
+
+## kubectl port-forward:
+Purpose:
+Used to forward one or more local ports to ports on a pod, enabling access to applications running inside the pod.
+Usage:
+Useful for testing and debugging purposes, especially for accessing applications without exposing them via external IPs or services.
+Example Command:
+ `kubectl port-forward <pod-name> <local-port>:<pod-port>`
+  
+<pod-name>: The name of the pod you want to forward to.
+<local-port>: The port on your local machine you want to use to access the application.
+<pod-port>: The port inside the pod that your application is listening on.
+
+Considerations:
+The command runs in the foreground, and terminating it stops the port forwarding.
+Useful for accessing applications directly from your local machine without additional network configurations.
+Requires connectivity to the Kubernetes API server.
+In summary, kubectl exec is about interacting with the running processes inside the container, whereas kubectl port-forward bridges your local machine with the application running inside a pod, allowing HTTP/S or TCP traffic to reach the pod from your local workstation. 
+Both commands are vital tools for development, debugging, and management of applications in a Kubernetes environment.
