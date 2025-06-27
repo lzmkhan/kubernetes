@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: svc-node-pod
+spec:
+  containers:
+    - name: busybox-svc
+      image: freelyit/nslookup
+      command:
+        - sleep
+        - '3600'
