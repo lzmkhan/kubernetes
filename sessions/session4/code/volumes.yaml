@@ -27,5 +27,21 @@ parameters:
 	type: io1
 	iopsPerGB: "10"
 	fsType:ext4
+
+# this volume is create in one node and shared across cluster.
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: nfs-pv
+spec:
+  capacity:
+    storage: 10Gi
+  accessModes:
+    - ReadWriteMany
+  nfs:
+    path: /exported/path/on/nfs
+    server: <nfs-server-ip>
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: nfs
 	
 
