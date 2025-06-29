@@ -77,6 +77,22 @@ Static vs. Dynamic Provisioning:
 **Dynamic Provisioning:** Kubernetes automatically provisions a PV when a PVC is created, based on the specified storage class.
 Overall, PVs are the actual storage volumes, whereas PVCs act as an abstraction layer for requesting, claiming, and using that storage in a more user-friendly manner within Kubernetes environments.
 
+| Volume Type       | Purpose / Use Case                                     | ReadWriteMany (RWX) | Scope        | Managed by Cloud | Persistent |
+|-------------------|--------------------------------------------------------|----------------------|---------------|------------------|------------|
+| `hostPath`        | Testing, single-node volumes, development              | ❌                   | Node-local    | ❌                | ✅         |
+| `emptyDir`        | Scratch space, temporary data for a pod                | ❌                   | Pod-local     | ❌                | ❌         |
+| `nfs`             | Shared network storage via NFS                         | ✅                   | Cluster-wide  | ❌                | ✅         |
+| `awsElasticBlockStore` | Block storage for a pod on AWS                     | ❌ (RWO only)        | Node-specific | ✅ (AWS)          | ✅         |
+| `gcePersistentDisk`   | Persistent disk for GKE                            | ❌ (RWO only)        | Node-specific | ✅ (GCP)          | ✅         |
+| `azureDisk`       | Persistent disk for Azure                              | ❌ (RWO only)        | Node-specific | ✅ (Azure)        | ✅         |
+| `awsEFS` (via CSI) | Shared file system on AWS (like NFS)                  | ✅                   | Cluster-wide  | ✅ (AWS)          | ✅         |
+| `cephfs`          | Distributed file system with high availability         | ✅                   | Cluster-wide  | ❌ / Optional     | ✅         |
+| `glusterfs`       | Distributed storage with replication                   | ✅                   | Cluster-wide  | ❌ / Optional     | ✅         |
+| `local`           | High-performance, node-pinned persistent volumes       | ❌                   | Node-local    | ❌                | ✅         |
+| `configMap`       | Injecting configuration data into pods                 | ❌                   | Pod-local     | N/A               | ❌         |
+| `secret`          | Storing sensitive data like passwords, keys, tokens    | ❌                   | Pod-local     | N/A               | ❌         |
+| `persistentVolumeClaim` | Abstraction layer for using PersistentVolumes    | Depends on PV        | Depends       | Depends           | ✅         |
+
 ## Lab:
 Open session 3 sample app and create mongo deployment with persistent volume and claim
 
